@@ -12,6 +12,7 @@
 Thumbs.db
 UserInterfaceState.xcuserstate
 $RECYCLE.BIN/
+*.env
 
 *.log
 log.txt
@@ -29,3 +30,4 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+/src/environments/*

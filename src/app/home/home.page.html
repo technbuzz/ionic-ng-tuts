@@ -14,12 +14,12 @@
     <hr>
   </ion-list>
 
-  <form class="ion-padding">
+  <form class="ion-padding" (submit)="addTodo()">
     <ion-item>
       <ion-label position="stacked">Add New</ion-label>
-      <ion-input placeholder="todo"></ion-input>
+      <ion-input name="todo" [(ngModel)]="newTodo" placeholder="todo"></ion-input>
     </ion-item>
-    <ion-button>
+    <ion-button type="submit">
       Add
     </ion-button>
   </form>

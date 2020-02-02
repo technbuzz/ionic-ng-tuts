@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AngularFirestore } from "@angular/fire/firestore";
+import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/firestore";
 import { Observable } from 'rxjs';
 import { debug } from 'util';
 
@@ -9,25 +9,31 @@ import { debug } from 'util';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-
   items: Observable<any[]>;
 
   newTodo: string = '';
+  itemsRef: AngularFirestoreCollection;
 
   constructor(private db: AngularFirestore ) {
-    this.items = db.collection('items').valueChanges();
+    this.itemsRef = db.collection('items')
+    this.items = this.itemsRef.valueChanges();
   }
 
   addTodo(){
-    debug
-    this.db.collection('items').add({
+    this.itemsRef.add({
       title: this.newTodo
-    }).then(resp => {
-      console.log(resp);
-      
+    })
+    .then(resp => {
+      this.itemsRef.doc(resp.id).update({
+        id: resp.id
+      })
     }).catch(error => {
       console.log(error);
-      
     })
+  }
+
+  remove(item){
+    console.log(item);
+    this.itemsRef.doc(item.id).delete()
   }
 }

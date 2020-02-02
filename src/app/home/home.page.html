@@ -10,6 +10,9 @@
   <ion-list>
     <ion-item *ngFor="let item of items | async">
       <ion-label>{{ item.title }}</ion-label>
+      <ion-button slot="end" fill="clear" color="danger" (click)="remove(item)">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
     </ion-item>
     <hr>
   </ion-list>
@@ -19,9 +22,8 @@
       <ion-label position="stacked">Add New</ion-label>
       <ion-input name="todo" [(ngModel)]="newTodo" placeholder="todo"></ion-input>
     </ion-item>
-    <ion-button type="submit">
-      Add
-    </ion-button>
+
+    <ion-button type="submit">Add</ion-button>
   </form>
 
 </ion-content>

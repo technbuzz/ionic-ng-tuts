@@ -17,21 +17,6 @@
         <ion-icon slot="icon-only" name="trash"></ion-icon>
       </ion-button>
     </ion-item>
-
-    <ion-item-group>
-      <h3>Add New Todo</h3>
-      <form class="ion-padding" method="POST" (submit)="addTodo()">
-        <ion-item>
-          <input type="file" name="inputFile" (change)="chooseFile($event)" required>
-        </ion-item>
-    
-        <ion-item>
-          <ion-input required name="todo" [(ngModel)]="newTodo" placeholder="Todo title"></ion-input>
-        </ion-item>
-    
-        <ion-button type="submit">Add</ion-button>
-      </form>
-    </ion-item-group>
   </ion-list>
 
   <ion-card>

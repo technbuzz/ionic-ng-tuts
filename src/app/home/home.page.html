@@ -9,6 +9,9 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let item of items | async">
+      <ion-thumbnail slot="start" *ngIf="item.imageUrl">
+        <img [src]="item.imageUrl" alt="">
+      </ion-thumbnail>
       <ion-label>{{ item.title }}</ion-label>
       <ion-button slot="end" fill="clear" color="danger" (click)="remove(item)">
         <ion-icon slot="icon-only" name="trash"></ion-icon>
@@ -31,13 +34,27 @@
     </ion-item-group>
   </ion-list>
 
-  <form class="ion-padding" (submit)="addTodo()">
-    <ion-item>
-      <ion-label position="stacked">Add New</ion-label>
-      <ion-input name="todo" [(ngModel)]="newTodo" placeholder="todo"></ion-input>
-    </ion-item>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Add New Todo</ion-card-subtitle>
+    </ion-card-header>
 
-    <ion-button type="submit">Add</ion-button>
-  </form>
+    <ion-card-content>
+      <form class="ion-padding" (submit)="addTodo()">
+        <ion-item>
+          <ion-label position="stacked">Add New</ion-label>
+          <ion-input name="todo" [(ngModel)]="newTodo" placeholder="todo"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none">
+          <input type="file" name="inputFile" (change)="chooseFile($event)" required>
+        </ion-item>
+    
+        <ion-button type="submit">Add</ion-button>
+      </form>
+    </ion-card-content>
+
+  </ion-card>
+
 
 </ion-content>

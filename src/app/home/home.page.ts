@@ -3,6 +3,8 @@ import { AngularFirestore, AngularFirestoreCollection } from "@angular/fire/fire
 import { Observable } from 'rxjs';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { LoadingController } from '@ionic/angular';
+import { finalize } from "rxjs/operators";
+import { UploadTaskSnapshot } from '@angular/fire/storage/interfaces';
 
 @Component({
   selector: 'app-home',
@@ -33,34 +35,46 @@ export class HomePage {
     })
     .then(async resp => {
 
-      const imageUrl = await this.uploadFile(resp.id, this.selectedFile)
+      const uploadTask: UploadTaskSnapshot = await this.uploadFile(resp.id, this.selectedFile)
+      const imageUrl = await uploadTask.ref.getDownloadURL()
+      console.log('imageUrl: ', imageUrl);
+      // debugger
 
       this.itemsRef.doc(resp.id).update({
         id: resp.id,
-        imageUrl: imageUrl || null
+        imageUrl: imageUrl || null,
       })
     }).catch(error => {
       console.log(error);
     })
   }
 
-  async uploadFile(id, file): Promise<any> {
-    if(file && file.length) {
+  async uploadFile(id, fileList): Promise<any> {
+    if(fileList && fileList.length) {
       try {
         await this.presentLoading();
-        const task = await this.storage.ref('images').child(id).put(file[0])
-        this.loading.dismiss();
-        return this.storage.ref(`images/${id}`).getDownloadURL().toPromise();
+        const file = fileList[0]
+        const fileRef = this.storage.ref(`images/${id}`);
+        const task = this.storage.upload(`images/${id}`, file)
+        task.percentageChanges().subscribe(resp => {
+          console.log(resp);
+        })
+        return task.snapshotChanges().pipe(
+            finalize(() => this.loading.dismiss() )
+        ).toPromise()
+
       } catch (error) {
         console.log(error);
       }
+    } else {
+      return null;
     }
   }
 
   async presentLoading() {
     this.loading = await this.loadingController.create({
       message: 'Please wait...',
-      duration: 2000
+      cssClass: 'with-progress'
     });
     return this.loading.present();
   }

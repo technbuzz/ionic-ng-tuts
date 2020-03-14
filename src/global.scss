@@ -24,3 +24,20 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+.with-progress {
+  .loading-wrapper{
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: var(--percent-uploaded);
+      height: 5px;
+      background-color: var(--ion-color-primary);
+      bottom: 0;
+      left: 0;
+      transition: width 0.5s linear;
+    }
+  }
+}

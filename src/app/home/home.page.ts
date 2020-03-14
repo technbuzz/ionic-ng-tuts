@@ -37,8 +37,6 @@ export class HomePage {
 
       const uploadTask: UploadTaskSnapshot = await this.uploadFile(resp.id, this.selectedFile)
       const imageUrl = await uploadTask.ref.getDownloadURL()
-      console.log('imageUrl: ', imageUrl);
-      // debugger
 
       this.itemsRef.doc(resp.id).update({
         id: resp.id,
@@ -57,6 +55,7 @@ export class HomePage {
         const fileRef = this.storage.ref(`images/${id}`);
         const task = this.storage.upload(`images/${id}`, file)
         task.percentageChanges().subscribe(resp => {
+          this.loading.style.setProperty('--percent-uploaded', `${resp.toFixed()}%`)
           console.log(resp);
         })
         return task.snapshotChanges().pipe(

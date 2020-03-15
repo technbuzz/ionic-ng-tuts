@@ -59,8 +59,7 @@ export class HomePage {
 
   async presentLoading() {
     this.loading = await this.loadingController.create({
-      message: 'Please wait...',
-      duration: 2000
+      message: 'Please wait...'
     });
     return this.loading.present();
   }

@@ -17,7 +17,6 @@ export class SettingsPage implements OnInit {
   }
 
   updateNumberMode() {
-    // this.settingsService.inputBS.next(this.dynamicPricing);
     this.events.publish('dynamic:Pricing', this.numberMode);
   }
 

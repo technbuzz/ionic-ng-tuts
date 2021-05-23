@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Events } from '@ionic/angular';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-home',
@@ -9,8 +9,8 @@ import { Events } from '@ionic/angular';
 export class HomePage {
 
   numberMode = true
-  constructor(private events: Events) {
-    this.events.subscribe('dynamic:Pricing', data => {
+  constructor(private settingsService: SettingsService) {
+    this.settingsService.numberMode$.subscribe(data => {
       this.numberMode = data
     });
   }

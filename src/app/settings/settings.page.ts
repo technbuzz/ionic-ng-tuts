@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Events } from '@ionic/angular';
-
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-settings',
@@ -9,15 +8,18 @@ import { Events } from '@ionic/angular';
 })
 export class SettingsPage implements OnInit {
 
-  numberMode: boolean = true;
+  numberMode: boolean;
 
-  constructor(private events: Events) { }
+  constructor(private settingsService: SettingsService) { }
 
   ngOnInit() {
+    this.settingsService.numberMode$.subscribe(resp => {
+      this.numberMode = resp
+    })
   }
 
   updateNumberMode() {
-    this.events.publish('dynamic:Pricing', this.numberMode);
+    this.settingsService.updateMode(this.numberMode)
   }
 
 }

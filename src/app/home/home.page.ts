@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Events } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +8,11 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  numberMode = false
-  constructor() {}
+  numberMode = true
+  constructor(private events: Events) {
+    this.events.subscribe('dynamic:Pricing', data => {
+      this.numberMode = data
+    });
+  }
 
 }

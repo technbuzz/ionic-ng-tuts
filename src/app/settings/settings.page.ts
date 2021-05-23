@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Events } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-settings',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SettingsPage implements OnInit {
 
-  constructor() { }
+  numberMode: boolean = true;
+
+  constructor(private events: Events) { }
 
   ngOnInit() {
+  }
+
+  updateNumberMode() {
+    // this.settingsService.inputBS.next(this.dynamicPricing);
+    this.events.publish('dynamic:Pricing', this.numberMode);
   }
 
 }

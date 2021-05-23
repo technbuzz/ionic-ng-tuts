@@ -8,5 +8,12 @@
 </ion-header>
 
 <ion-content>
-
+  <ion-item>
+    <ion-label>Dynamic Pricing</ion-label>
+    <ion-toggle
+      checked="false"
+      [(ngModel)]="numberMode"
+      (ionChange)="updateNumberMode()"
+    ></ion-toggle>
+  </ion-item>
 </ion-content>

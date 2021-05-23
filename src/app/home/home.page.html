@@ -13,9 +13,16 @@
 
 <ion-content>
   <div class="ion-padding">
-    <ion-item>
+    <ion-item *ngIf="numberMode; else textMode">
       <ion-label position="stacked">Enter Number</ion-label>
       <ion-input type="number"></ion-input>
     </ion-item>
+    <ng-template #textMode>
+      <ion-item>
+        <ion-label position="stacked">Enter Text</ion-label>
+        <ion-input></ion-input>
+      </ion-item>
+      
+    </ng-template>
   </div>
 </ion-content>
